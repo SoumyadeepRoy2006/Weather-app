@@ -1,0 +1,70 @@
+<%
+const weatherInfo = { 0: "Clear sky" , 1: "Mainly clear" , 2: "Partly cloudy" , 3: "Overcast" , 45: "Fog" ,
+   48: "Depositing rime fog" , 51: "Light drizzle" , 52: "Moderate drizle" , 53: "Heavy drizle" ,
+   56: "Light freezing drizzle" , 57: "Heavy freezing drizzle" , 61: "Slight rain" , 63: "Moderate rain" ,
+   65: "Heavy rain" , 66: "Light freezing rain" , 67: "Heavy freezing rain" , 71: "Slight snowfall" ,
+   73: "Moderate snowfall" , 75: "Heavy snowfall" , 77: "Snow grains" , 80: "Slight rain showers" ,
+   81: "Moderate rain showers" , 82: "Heavy rain showers" , 85: "Slight snow showers" , 86: "Heavy snow showers" ,
+   95: "Thenderstorm" , 96: "Thunderstrom, slight hail" , 99: "Thunderstrom, heavy hail" }
+const temp = data.temperature;
+
+const time = new Date(data.time);
+const h = time.getHours();
+const m = time.getMinutes();
+const hms = `${h<10?0:''}${h%12||12} : ${m<10?0:''}${m} ${h<12? "AM":"PM"}`;
+
+let color = "unset";
+if(temp < 20) {
+   color = "cyan";
+} else if (temp < 30) {
+   color = "#2f2";
+} else if (temp < 40) {
+   color = "gold"
+} else if (temp >= 40) {
+   color = "red"
+}
+
+function Image(x) { return `./images/${x}` }
+let imageUrl = Image("default.jpg");
+const code = data.weathercode;
+if ([0,1].includes(code)) 
+   imageUrl = Image("clear.jpeg");
+else if (code == 3)
+   imageUrl = Image("overcast.webp");
+else if ([45, 48].includes(code)) 
+   imageUrl = Image("fog.webp");
+else if ([51,52,53,56,57,61,63,65,66,67,80,81,82].includes(code)) 
+   imageUrl = Image("rain.jpg");
+else if ([71,73,75,77,85,86].includes(code)) 
+   imageUrl = Image("snow.jpeg");
+else if ([95,96,99].includes(code)) 
+   imageUrl = Image("thunder.webp");
+%>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="./styles/main.css" />
+      <title>How's the weather?</title>
+   </head>
+   <body style="background: url('<%= imageUrl %>') center/cover no-repeat">
+      <div id="frame">
+         <h4 id="refreshTime">Last refreshed: <span style="letter-spacing: normal;"><%= hms %></span></h4>
+         <h1 id="city_name"><%= city.name %>:</h1>
+         <h2 id="weather">
+            <span style="--tempCol: <%= color %>;"><%= temp %> °C</span> - <span><%= weatherInfo[data.weathercode] %></span>
+         </h2>
+         <form method="get" action="/">
+            <select id="options" name="city">
+               <% for (const i in cities) { %>
+                  <option value="<%= cities[i].code %>"<% if(cities[i].code == city.code) { %> selected <% } %>>
+                     <%= cities[i].name %>
+                  </option>
+               <% } %>
+            </select>
+         </form>
+      </div>
+   </body>
+   <script src="./scripts/script.js"></script>
+</html>

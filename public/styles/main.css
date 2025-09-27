@@ -1,0 +1,67 @@
+body{
+	height: 100dvh;
+	margin: 0;
+	padding: 1rem;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#frame{
+	width: 70%;
+	height: 70%;
+	padding: 4rem;
+	box-sizing: border-box;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	row-gap: 0rem;	
+	font-family: AGENCY FB;
+	font-size: xx-large;
+	letter-spacing: 0.5rem;
+	background-color: #fff2;
+	backdrop-filter: blur(5px);
+	box-shadow: 5px 5px 10px #0005;
+	border-radius: 1.5rem;
+	animation: fadePop 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+}
+
+#refreshTime{
+	position: absolute;
+	top: 0;
+	right: calc(0% + 4rem);
+	font-size: 1.4rem;
+}
+
+#frame > h1,
+#frame > h2,
+#frame > h4,
+select{
+	color: white;
+	text-shadow: 0.5px 0.5px 5px #0007;
+}
+span{
+	color: var(--tempCol);
+}
+
+@keyframes fadePop {
+	0%{opacity: 0; transform: scale(0);}
+	100%{opacity: 1; transform: scale(1);}
+}
+
+select{
+	padding: 1rem 1.5rem;
+	font-size: large;
+	background-color: #fff1;
+	border: none;
+	border-radius: 1rem;
+}
+select:focus-visible{
+	outline: none;
+}
+select > option{
+	color: #555;
+}
