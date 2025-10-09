@@ -80,6 +80,7 @@ app.listen(port, () => {
 	else {
 		try {
 			console.log(`Server running on IP: [${os.networkInterfaces()["Wi-Fi"][1].address}] - Port: ${port}`);
-		}
+		} catch (error) { }
 	}
 })
+
