@@ -3,7 +3,7 @@ import axios from 'axios'
 import os from 'os'
 
 const app = express()
-const port = 2000;
+const port = parseInt(process.env.PORT) ?? 2000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -75,5 +75,11 @@ app.get("/", async (req, res) => {
 })
 
 app.listen(port, () => {
-	console.log(`Server running on IP: [${os.networkInterfaces()["Wi-Fi"][1].address}] - Port: ${port}`)
+	if (process.env.PORT)
+		console.log(`Server live and running`);
+	else {
+		try {
+			console.log(`Server running on IP: [${os.networkInterfaces()["Wi-Fi"][1].address}] - Port: ${port}`);
+		}
+	}
 })
